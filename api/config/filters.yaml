@@ -1,0 +1,15 @@
+parameters:
+
+services:
+    messages.order_filter:
+        parent: 'api_platform.doctrine.orm.order_filter'
+        arguments: [ { sendAt: ~ } ]
+        tags:  [ 'api_platform.filter' ]
+    messages.date_filter:
+        parent: 'api_platform.doctrine.orm.date_filter'
+        arguments: [ { sendAt: ~ } ]
+        tags:  [ 'api_platform.filter' ]
+    messages.search_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { room.id: ~ } ]
+        tags:  [ 'api_platform.filter' ]

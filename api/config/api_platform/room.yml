@@ -1,0 +1,16 @@
+App\Entity\Room:
+  collectionOperations:
+    registration:
+      method: POST
+      path: /rooms/create
+      input: App\Actions\Room\Create\Input
+    get: ~
+  itemOperations:
+    get:
+      filters: ['messages.order_filter']
+    join_room:
+      method: PUT
+      path: /rooms/{id}/join
+      input: App\Actions\Room\Join\Input
+  attributes:
+    output: App\Actions\Room\Shared\Output

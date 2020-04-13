@@ -1,0 +1,13 @@
+App\Entity\Message:
+  collectionOperations:
+    create_message:
+      method: POST
+      path: /message/create
+      input: App\Actions\Message\Create\Input
+    get:
+      method: 'GET'
+      filters: ['messages.date_filter', 'messages.order_filter', 'messages.search_filter']
+  itemOperations:
+    get: ~
+  attributes:
+    output: App\Actions\Message\Shared\MessageOutput

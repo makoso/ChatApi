@@ -1,0 +1,56 @@
+api_platform:
+    title: 'Chat API'
+    version: '0.0.1'
+    name_converter: ~
+    path_segment_name_generator: 'api_platform.path_segment_name_generator.dash'
+    allow_plain_identifiers: false
+    eager_loading:
+        enabled: true
+        fetch_partial: false
+        max_joins: 30
+        force_eager: true
+    enable_fos_user: false
+    swagger:
+        versions: [3]
+    enable_swagger: true
+    enable_swagger_ui: true
+    enable_entrypoint: true
+    enable_docs: true
+    graphql:
+        enabled: false
+        graphiql:
+            enabled: true
+    collection:
+        order: 'ASC'
+        order_parameter_name: 'order'
+        pagination:
+            enabled: true
+            client_enabled: true
+            client_items_per_page: true
+            items_per_page: 30
+            maximum_items_per_page: 100000
+            page_parameter_name: 'page'
+            enabled_parameter_name: 'pagination'
+            items_per_page_parameter_name: 'itemsPerPage'
+            partial: true
+            client_partial: true
+            partial_parameter_name: 'partial'
+    mapping:
+        paths: ['%kernel.project_dir%/config/api_platform']
+    resource_class_directories:
+        - '%kernel.project_dir%/src/Entity'
+    exception_to_status:
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+        ApiPlatform\Core\Exception\InvalidArgumentException: !php/const Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST
+    formats:
+        jsonld:
+            mime_types: ['application/ld+json', 'application/json']
+        html:
+            mime_types: ['text/html']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    error_formats:
+        jsonproblem:
+            mime_types: ['application/problem+json']
+        jsonld:
+            mime_types: ['application/ld+json']

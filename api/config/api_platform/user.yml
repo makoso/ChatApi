@@ -1,0 +1,8 @@
+App\Entity\User:
+  collectionOperations:
+    registration:
+      method: POST
+      path: /users/registration
+      input: App\Actions\User\Registration\Input
+  itemOperations:
+    get: ~

@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./docker/db/data:/var/lib/postgresql/data:rw
+    ports:
+      - 9054:5432
+  php:
+    build:
+      context: .
+      dockerfile: php7/Dockerfile
+      args:
+        TIMEZONE: ${TIMEZONE}
+    volumes:
+      - ./api:/var/www/symfony
+      - ./.env:/var/www/symfony/.env:rw
+    volumes_from:
+      - db
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - ${APP_PORT}:80
+    volumes_from:
+      - php

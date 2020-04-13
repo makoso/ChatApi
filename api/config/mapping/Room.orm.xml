@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Entity\Room" table="rooms">
+        <id name="id" type="uuid" column="id">
+            <generator strategy="CUSTOM"/>
+            <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidGenerator"/>
+        </id>
+        <field name="name" type="string" column="name" nullable="false"/>
+        <field name="private" type="boolean" column="private" nullable="false"/>
+        <field name="directMessageRoom" type="boolean" column="direct_message_room" nullable="false"/>
+        <many-to-one field="owner" target-entity="App\Entity\User">
+            <join-column name="owner_id" referenced-column-name="id" />
+        </many-to-one>
+        <many-to-one field="creator" target-entity="App\Entity\User">
+            <join-column name="creator_id" referenced-column-name="id" />
+        </many-to-one>
+        <many-to-many field="members" target-entity="App\Entity\User">
+            <join-table name="room_members">
+                <join-columns>
+                    <join-column name="room_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="member_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+        <one-to-many field="messages" target-entity="App\Entity\Message" mapped-by="room" />
+    </entity>
+</doctrine-mapping>
